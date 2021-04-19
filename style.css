@@ -1,0 +1,51 @@
+
+
+html,body{
+
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+
+}
+.login-form{        
+    position: relative;
+    top: 160px; 
+    margin-left: 500px;
+    margin-right: 500px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 55px;
+    padding: 2%;
+    
+}
+
+.register-form{        
+    position: relative;
+    top: 100px; 
+    margin-left: 500px;
+    margin-right: 500px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 55px;
+    padding: 2%;
+    
+}
+
+.input{
+    text-align: center;
+    background-color: rgb(22, 17, 17);    
+    border-radius: 25px;
+    border: 1px solid white;
+    padding: 20px; 
+    width: 200px;
+    height: 15px;  
+}
+
+
+h1{
+    color: white;
+}
+p{
+    color: white;
+
+}
+
