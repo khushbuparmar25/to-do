@@ -50,55 +50,57 @@ body{
 .register :hover{
     color:#000;
 }
-/* 
-html,body{
-    text-align: center !important;
-    font-family: 'Roboto Slab', serif;
-    color: white !important;
-}
-.header{
-    text-align: center !important;
-}
-.login-form{        
-    position: relative !important;
-    top: 160px !important; 
-    margin-left: 500px !important;
-    margin-right: 500px !important;
-    border-style: solid !important;
-    border-color: white !important;
-    border-radius: 55px !important;
-    padding: 2% !important;
-    
-}
-
-.register-form{        
-    position: relative !important;
-    top: 100px !important; 
-    margin-left: 500px !important;
-    margin-right: 500px !important;
-    border-style: solid !important;
-    border-color: white !important;
-    border-radius: 55px !important;
-    padding: 2% !important;
-    
-}
-
-.input{
-    text-align: center !important;
-    background-color: rgb(22, 17, 17) !important;    
-    /* border-radius: 25px !important;
-    border: 1px solid white !important;
-    padding: 20px !important; 
-    width: 200px !important;
-    height: 15px !important;   
-}
 
 
-h1{
-    color: white;
+@media(max-width:1400px){
+    .component-login, .component-register{
+        margin-left:400px !important;
+    }
+    .input-field, .input-name{
+        margin-left: 40px;
+    }
 }
-p{
-    color: white;
 
-} */
+@media(min-width:1025px) and (max-width:1201px){
+    .component-login, .component-register{
+        margin-left:340px !important;
+        width: 35%;
+    }
+    .input-field, .input-name{
+        margin-left: 35px;
+    }
+}
+
+@media(min-width:769px) and (max-width:1024px){
+    .component-login, .component-register{
+        margin-left:200px !important;
+        width: 45%;        
+        padding-bottom: 5%;
+    }
+    .input-field, .input-name{
+        margin-left: 35px;
+    }
+}
+
+@media(min-width:481px) and (max-width:768px){
+    .component-login, .component-register{
+        margin-left:100px !important;
+        width: 62%;        
+        padding-bottom: 5%;
+    }
+    .input-field, .input-name{
+        margin-left: 35px;
+    }
+}
+
+@media(max-width:480px){
+    .component-login, .component-register{
+        margin-left:50px !important;
+        width: 70%;        
+        padding-bottom: 5%;
+    }
+    .input-field, .input-name{
+        margin-left: 30px;
+    }
+}
 
