@@ -28,10 +28,9 @@ app.use(express.urlencoded({extended:false}))
 
 var cons = require('consolidate');
 // view engine setup
-app.engine('html', cons.swig)
+app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -47,30 +46,40 @@ app.get('/login', (req, res)=>{
     res.render('login');
 });
 
+var i1 = [];
+
 app.get('/home', (req, res)=>{
-    res.render('home');
+    Task.find({}, (err, tasks)=>{
+        if(err){
+            console.log(err);
+
+        } else{
+            res.render('home', {
+            tasks: tasks
+            });   
+        } 
+    });
 });
 
 app.get('/task-form', (req, res)=>{
     res.render('task-form');
 });
 
-app.get('/home', (req, res)=>{
-    res.redirect('home');
+
+app.post('/task-form', (req, res)=>{
+    // i = await req.body.title;
+    // i1.push(i);
+    // // res.redirect('/home');
+
+    let task = new Task();
+    task.title = req.body.title;
+    task.task = req.body.task;
+    task.save(res.redirect('/home'));
+
+
 });
 
-app.get('/', (req, res) =>{
-    Task.find({}, (err, tasks)=>{
-        if(err){
-            console.log(err);
-        } else{
-            res.render('home', {
-            title: 'Task',
-            tasks: tasks
-            });   
-        } 
-    });
-});
+
 
 app.post('/register', async (req, res)=>{
     try{
@@ -110,14 +119,16 @@ app.post('/login', async(req,res) => {
     }
 });
 
-// const securePassword = async (password) =>{
-//     const passwordHash = await bcrypt.hash(password, 10);
-//     console.log(passwordHash);
-//     const passwordMatch = await bcrypt.compare(password, passwordHash);
-//     console.log(passwordMatch);
-// }
+app.get('/edit-task/:id', (req,res)=>{
+    Task.findById(req.params.id, (err, task)=>{
 
-// securePassword("123")
+        res.render('edit-task', {
+            task:task
+           
+        });
+    });
+});
+
 
 
 app.listen(3000, ()=>{

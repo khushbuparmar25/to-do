@@ -130,25 +130,42 @@ body {
     </form>
   </div>
 </div>
+
+<br>
+
+
 <div style="padding-left:16px">
     
-    <div class="w3-container">
+  <div class="w3-container">
+    
+    <div class="w3-panel w3-card-4 w3-yellow"><p>Todo-list</p>
+      <% for(var i = 0; i<tasks.length;i++) {%>
+
+        <ul class="list-group-item">
+       <a href="edit-task/<%= tasks[i]._id %>"><%= tasks[i].title%></a> 
+      </ul>
       
-      <div class="w3-panel w3-card-4 w3-yellow"><p>Todo-list</p></div>
+      <% } %>
+      <br>
       <a href="/task-form" class="btn btn-secondary btn-lg active fa fa-plus" role="button" aria-pressed="true"></a>
     </div>
+    
   </div>
+</div>
+
+
 
 <script>
 function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+var x = document.getElementById("myTopnav");
+if (x.className === "topnav") {
+  x.className += " responsive";
+} else {
+  x.className = "topnav";
+}
 }
 </script>
+
 </body>
 </html>
 
