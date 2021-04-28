@@ -19,10 +19,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  confirmpassword: {
-    type: String,
-    required: true
+  author: {
+    type: String
   }
+
 }, { collection: 'users'});
 
 // UserSchema.pre("save", async function(next){

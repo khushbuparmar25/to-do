@@ -10,6 +10,10 @@ let taskSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    author:{
+        type: String
+    }
+
 },{ collection: 'tasks'});
 
 let Task = module.exports = mongoose.model('Task', taskSchema);

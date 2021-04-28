@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Edit Task</title>
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
@@ -57,13 +56,13 @@ input[type=submit]:hover {
 <body>
 
 <div class="container">
-  <form action="/edit-task/<%task._id%>" method="POST">
+  <form action="/edit-task/<%= task._id%>" method="POST">
     <label for="title"> Title</label>
     <input type="text" id="title" name="title" placeholder="Title..." value="<%= task.title %>">
 
     <label for="task">Task</label>
-    <textarea id="task" name="task"  placeholder="Write your task..." style="height:200px" > <%= task.task %></textarea>
-    <button class="pill-button" type="submit" value="Submit">Edit task</button>
+    <textarea id="task" name="task" placeholder="Write your task..." style="height:200px"><%= task.task %></textarea>
+    <button class="pill-button" type="submit" value="Submit" >Edit task</button>
     
   </form>
 </div>
