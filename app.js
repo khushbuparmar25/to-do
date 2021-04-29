@@ -187,19 +187,16 @@ function ensureAuthenticated(req, res, next){
     }
 }
 
-app.delete('/home', (req, res) => {
-    let query={_id:req.params.id}
-    Task.findById(req.params.id, (err)=>{        
-        Task.remove(query, (err) => {
-            if(err){
-                console.log(err);
-            }
-            res.send('Success');
-        });
-        
-    });
+app.post('/delete', (req, res) => {
+    const check = req.body.delete;
+    Task.findByIdAndRemove(check, (err)=>{
+        if(!err){
+            console.log("Successful");
+            res.redirect('/home');
+        }
+    })
 });
 
-app.listen(8000, ()=>{
-console.log('server started on port 8000');
+app.listen(3000, ()=>{
+console.log('server started on port 3000');
 });
