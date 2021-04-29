@@ -39,7 +39,7 @@
             <% if(tasks[i].author === username){%>
             <ul class="list-group-item task-items">
               <a class="bullets " href="edit-task/<%=tasks[i]._id %>">&bull; <%= tasks[i].title%></a>
-              <i class="fa fa-trash-o delete-icon"></i>
+              <a href="/home" class="fa fa-trash-o delete-icon delete-task" data-id= <%= tasks[i]._id%> ></a>
             <% } %>
             </ul>
           <% }%>

@@ -187,6 +187,19 @@ function ensureAuthenticated(req, res, next){
     }
 }
 
-app.listen(3000, ()=>{
-console.log('server started on port 3000');
+app.delete('/home', (req, res) => {
+    let query={_id:req.params.id}
+    Task.findById(req.params.id, (err)=>{        
+        Task.remove(query, (err) => {
+            if(err){
+                console.log(err);
+            }
+            res.send('Success');
+        });
+        
+    });
+});
+
+app.listen(8000, ()=>{
+console.log('server started on port 8000');
 });
