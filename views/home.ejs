@@ -26,45 +26,35 @@
           <button type="submit" class=" search-bar-icon"><i class="fa fa-search"></i></button>
         </form>
       </div>
-
       <a href="/" class="logout">Logout</a>
-      <a href="#" class="logout"><%= username%></a>
-
-
     </div>
     <div>
       <div class="w3-container">
-        <div class="w3-panel w3-card-4 w3-yellow todo-list"><p class="todo-header">Todo-list</p>
-          <% for(var i=0; i<tasks.length; i++) {%>
-
-            <% if(tasks[i].author === username){%>
+        <div class="w3-panel w3-card-4 w3-yellow todo-list"><p class="todo-header"><%= username %>'s Todo-list</p>
+          <% for(var i=0; i<tasks.length; i++) { %>
+            <% if(tasks[i].author === username){ %>
               <form action="/delete" method="POST">
-            <ul class="list-group-item task-items">
-              <a class="bullets " href="edit-task/<%=tasks[i]._id %>">&bull; <%= tasks[i].title%></a>
-              <!-- <input name= "delete" class="fa fa-trash-o delete-icon delete-task" onclick="this.form.submit()" type= "submit"  data-id= <%= tasks[i]._id%>> </input> -->
-              <button name= "delete" type= "submit" class="fa fa-trash-o delete-icon delete-task" role="button" aria-pressed="true" value="<%= tasks[i]._id %>"></button>
-              <% } %>
-
-            </ul>
-          </form>
-          <% }%>
+              <ul class="list-group-item task-items">
+                <a class="bullets " href="edit-task/<%= tasks[i]._id %>">&bull; <%= tasks[i].title%></a>
+                <button name= "delete" type= "submit" class="fa fa-trash-o delete-icon delete-task" role="button" aria-pressed="true" value="<%= tasks[i]._id %>"></button>
+                <% } %>
+              </ul>
+            </form>
+            <% } %>
           <a href="/task-form" class="btn btn-lg fa fa-plus add-task-button " role="button" aria-pressed="true"></a>
         </div>
       </div>
     </div>
   </div>
   <script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
     }
-  }
-  
-
-
   </script>
 </body>
 </html>

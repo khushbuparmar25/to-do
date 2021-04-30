@@ -21,9 +21,8 @@ db.on('error', (err)=>{
 
 const User = require('./models/user');
 const Task = require('./models/task');
-const user = require('./models/user');
 
-
+//middleware of express
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 
@@ -34,6 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//middleware for sessions
 app.use(session({
     secret: 'keyboard cat',
     resave: true,
@@ -57,13 +57,8 @@ app.get('/login', (req, res)=>{
     res.render('login');
 });
 
-app.get('*', (req,res,next)=>{
-    res.locals.user = req.user || null;
-    next();
-});
-
 app.get('/home', (req, res)=>{
-    Task.find({}, (err, tasks, user)=>{
+    Task.find({}, (err, tasks)=>{
         if(err){
             console.log(err);
 
@@ -76,41 +71,30 @@ app.get('/home', (req, res)=>{
     });
 });
 
-
-
-app.get('/task-form',ensureAuthenticated, (req, res)=>{
+app.get('/task-form',(req, res)=>{
     res.render('task-form');
 });
 
-
 app.post('/task-form', (req, res)=>{
-
-
     let task = new Task();
     task.title = req.body.title;
     task.task = req.body.task;
     task.author = req.user.username;
     task.save(res.redirect('/home'));
-
-
 });
-
-
 
 app.post('/register', async (req, res)=>{
     try{
         const password = req.body.password;
         const cpassword = req.body.cpassword;
-
         if(password === cpassword){
             const passwordHash = await bcrypt.hash(password, 10);
-
             const registerEmployee = new User({
                 email: req.body.email,
                 username: req.body.username,
                 password: passwordHash,
             })
-            const registered = await registerEmployee.save();
+            await registerEmployee.save();
             res.status(201).redirect('/');
         }else{
             res.send("Invalid login details");
@@ -127,34 +111,11 @@ app.post('/register', async (req, res)=>{
       failureRedirect: '/'
     })(req, res, next);
   });
-  
 
-// app.post('/login', async(req,res) => {
-//     try{
-//         const email= req.body.email;
-//         const password= req.body.password;
-//         const useremail= await User.findOne({email:email});
-//         const passwordMatch = await bcrypt.compare(password, useremail.password);
- 
-//         if(passwordMatch){
-//             res.status(201).redirect("/home");
-//         }
-//         else{
-//             res.send("Invalid login details");
-//         }
-//     }catch(error){
-//         res.status(400).send("Not a valid Email Id")
-//     }
-// });
-
-
-
-app.get('/edit-task/:id',ensureAuthenticated, (req,res)=>{
+app.get('/edit-task/:id',(req,res)=>{
     Task.findById(req.params.id, (err, task)=>{
-
         res.render('edit-task', {
             task:task
-           
         });
     });
 });
@@ -163,9 +124,7 @@ app.post('/edit-task/:id', (req,res)=>{
     let task = {};
     task.title=req.body.title;
     task.task=req.body.task;
-
     let query = {_id:req.params.id}
-
     Task.updateOne(query, task, (err)=>{
         if(err){
             console.log(err);
@@ -176,22 +135,10 @@ app.post('/edit-task/:id', (req,res)=>{
     });
 });
 
-
-
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-
-    } else {
-        res.redirect('/');
-    }
-}
-
 app.post('/delete', (req, res) => {
     const check = req.body.delete;
     Task.findByIdAndRemove(check, (err)=>{
         if(!err){
-            console.log("Successful");
             res.redirect('/home');
         }
     })

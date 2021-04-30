@@ -11,7 +11,7 @@ module.exports=(passport)=>{
         User.findOne(query, (err, user)=> {
             if(err) throw err;
             if(!user){
-                return done (null, false, {message:'Nouser found'});
+                return done(null, false, {message:'Nouser found'});
             }
             bcrypt.compare(password, user.password, (err, isMatch) => {
                 if(err) throw err;
