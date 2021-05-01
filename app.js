@@ -6,6 +6,7 @@ const config = require('./config/database');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const session = require('express-session');
+const flash = require('connect-flash')
 
 mongoose.connect(config.database, { useNewUrlParser: true , useUnifiedTopology: true  });
 let db = mongoose.connection;
@@ -21,6 +22,8 @@ db.on('error', (err)=>{
 
 const User = require('./models/user');
 const Task = require('./models/task');
+
+
 
 //middleware of express
 app.use(express.json());
@@ -40,13 +43,22 @@ app.use(session({
     saveUninitialized:true
 }))
 
+//Express messages middleware
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
 require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
 
 app.get('/', (req, res)=>{
-    res.render('login');
+    const errors = req.flash().error || [];
+
+    res.render('login', {errors});
 });
 
 app.get('/register', (req, res)=>{
@@ -66,6 +78,7 @@ app.get('/home', (req, res)=>{
             res.render('home', {
             tasks: tasks,
             username: req.user.username
+            
         });   
         } 
     });
@@ -97,7 +110,8 @@ app.post('/register', async (req, res)=>{
             await registerEmployee.save();
             res.status(201).redirect('/');
         }else{
-            res.send("Invalid login details");
+            req.flash('error', 'Invalid login details');
+            res.redirect('/register');
         }
     } catch(error){
         res.status(400).send(error);
@@ -108,7 +122,8 @@ app.post('/register', async (req, res)=>{
  app.post('/login', async (req, res, next) => {
     passport.authenticate('local', {
       successRedirect: '/home',
-      failureRedirect: '/'
+      failureRedirect: '/',
+      failureFlash: true
     })(req, res, next);
   });
 
@@ -144,6 +159,6 @@ app.post('/delete', (req, res) => {
     })
 });
 
-app.listen(3000, ()=>{
-console.log('server started on port 3000');
+app.listen(8000, ()=>{
+console.log('server started on port 8000');
 });

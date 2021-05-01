@@ -34,8 +34,12 @@ body{
     border-radius: 20px;
     padding-bottom: 1%;
 }
+.header1{
+    margin-top: 2%;
+    text-align: center !important;
+}
 .header{
-    margin-top: 5%;
+    padding-top: 5% !important;
     text-align: center !important;
 }
 .input-field{

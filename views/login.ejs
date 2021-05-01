@@ -13,7 +13,12 @@
 </head>
 <body >
   <form method='POST' action='/login' class="row g-3 component-login">
-      <h1 class="header">LogIn</h1>
+    <div>
+      <% for(i=0;i<errors.length; i++){ %>
+        <div class="header1">  <%= errors[i]%> </div>  
+      <% }%>
+    <h1 class="header">LogIn</h1>
+  </div>
       <div class="p-0 col-12">
         <input type="text" class="form-control input-field" id="username" name="username" placeholder="Username" required>
       </div>
