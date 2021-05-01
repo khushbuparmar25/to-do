@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/task.css">
 </head>
 <body>
-<div class="container">
+<div class="container task-container">
   <form action="/edit-task/<%= task._id%>" method="POST">
     <label for="title"> Title</label>
     <input type="text" id="title" name="title" placeholder="Title..." value="<%= task.title %>">

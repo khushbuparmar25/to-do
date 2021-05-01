@@ -108,8 +108,8 @@ ul.task-items{
 .add-task-button{
     background-color:#34495e;
     border-radius: 20% !important;
-    margin-left:420px;  
-    margin-bottom:10px;
+    position: relative;
+    left: 50%;
 }
 .add-task-button:hover{
     background-color:#2C3A47;
