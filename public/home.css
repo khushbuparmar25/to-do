@@ -78,7 +78,7 @@ background: #ccc;
 }
 .w3-container{
     padding:50px 300px !important;
-    
+    left:50% !important;
 }
 .todo-list{
     background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
@@ -108,8 +108,9 @@ ul.task-items{
 .add-task-button{
     background-color:#34495e;
     border-radius: 20% !important;
-    margin-left:420px;  
-    margin-bottom:10px;
+    position: relative;
+    left:50%;
+    margin-bottom: 10px;
 }
 .add-task-button:hover{
     background-color:#2C3A47;
@@ -202,4 +203,10 @@ ul.task-items{
     padding-right: 240px !important;
   }
   /* .fa-plus  */
+}
+
+@media (min-width:759) {
+  .search-container{
+    display:none !important;
+  }
 }
