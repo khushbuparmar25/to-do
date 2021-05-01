@@ -109,8 +109,7 @@ ul.task-items{
     background-color:#34495e;
     border-radius: 20% !important;
     position: relative;
-    left:50%;
-    margin-bottom: 10px;
+    left: 50%;
 }
 .add-task-button:hover{
     background-color:#2C3A47;
