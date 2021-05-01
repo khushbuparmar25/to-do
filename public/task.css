@@ -55,3 +55,24 @@ input[type=submit]:hover {
     background-color:#dfe4ea;
     margin:80px 300px !important;
 }
+
+@media(min-width:851px) and (max-width:1100px){
+  .task-container{
+    background-color:#dfe4ea;
+    margin:80px 100px !important;
+}
+}
+
+@media(min-width:680px) and (max-width:851px){
+  .task-container{
+    background-color:#dfe4ea;
+    margin:80px 100px !important;
+}
+}
+
+@media(min-width:100px) and (max-width:680px){
+  .task-container{
+    background-color:#dfe4ea;
+    margin:80px 10px !important;
+}
+}
