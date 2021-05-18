@@ -11,6 +11,7 @@
 </head>
 <body >
     <form method='POST' action='/register' class="row g-3 component-register">
+      
         <h1 class="header">Register</h1>
         <div class="p-0 col-12">
           <!-- <label for="inputEmail4" class="form-label input-name">Email*</label> -->
@@ -32,6 +33,15 @@
           <button type="submit" class="btn btn-primary login-btn" value="submit" type="submit">Register</button>
         </div>
         <div >Already have an account? <a class="register" href="/">LogIn here</a></div>
+        <% if(locals.message){ %>
+          <div class="flash-danger-message" role="alert">
+            <%=message.danger%>
+          </div>
+          <div class="flash-success-message" role="alert">
+            <%=message.success%>
+          </div>
+        <% } %>      
       </form>
+      
     </body>
 </html>

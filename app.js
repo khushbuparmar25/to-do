@@ -7,6 +7,8 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 mongoose.connect(config.database, { useNewUrlParser: true , useUnifiedTopology: true  });
 let db = mongoose.connection;
@@ -71,18 +73,23 @@ app.get('/login', (req, res)=>{
 
 app.get('/home', (req, res)=>{
     Task.find({}, (err, tasks)=>{
-        if(err){
-            console.log(err);
-
-        } else{
-            res.render('home', {
-            tasks: tasks,
-            username: req.user.username
-            
-        });   
-        } 
+        
+        if(!req.user){
+            req.flash('danger', 'Not authorized');
+            res.redirect('/');
+        }else{
+            if(err){
+                console.log(err);
+    
+            } else{
+                res.render('home', {
+                tasks: tasks,
+                username: req.user.username                
+            });   
+            }} 
+        });
     });
-});
+
 
 app.get('/task-form',(req, res)=>{
     res.render('task-form');
@@ -96,6 +103,12 @@ app.post('/task-form', (req, res)=>{
     task.save(res.redirect('/home'));
 });
 
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
 app.post('/register', async (req, res)=>{
     try{
         const password = req.body.password;
@@ -107,11 +120,18 @@ app.post('/register', async (req, res)=>{
                 username: req.body.username,
                 password: passwordHash,
             })
+            if(await User.findOne({email: req.body.email}) || await User.findOne({username: req.body.username}) ){
+                req.flash('success', 'User already exists');
+                res.locals.message = req.flash();
+                res.render('register');
+            }else{
             await registerEmployee.save();
             res.status(201).redirect('/');
+            }
         }else{
-            req.flash('error', 'Invalid login details');
-            res.redirect('/register');
+            req.flash('danger', 'Invalid login credentials');
+            res.locals.message = req.flash();
+            res.render('register');            
         }
     } catch(error){
         res.status(400).send(error);
@@ -158,6 +178,20 @@ app.post('/delete', (req, res) => {
         }
     })
 });
+
+app.get('/home', (res,req) => {
+    const {search} = req.query;
+
+    Task.findAll({title: {title: { [Op.like]: '%' + search + '%' }}})
+    .then(tasks => res.render('home', {tasks}))
+    .catch(err => comsole.log(err));
+});
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
+
 
 app.listen(8000, ()=>{
 console.log('server started on port 8000');
